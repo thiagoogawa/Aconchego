@@ -16,6 +16,7 @@ struct ListingImageCarouselView: View {
                 Image(image)
                     .resizable()
                     .scaledToFit()
+                    .cornerRadius(8)
             }
         }
         .tabViewStyle(.page)
