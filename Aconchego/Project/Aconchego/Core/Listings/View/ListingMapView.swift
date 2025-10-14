@@ -12,6 +12,7 @@ struct ListingMapView: View {
     private let listings: [Listing]
     @State private var cameraPosition: MapCameraPosition
     @State private var selectedListing: Listing?
+    @State private var showDetails = false
     @Environment(\.dismiss) var dismiss
     
     init(listings: [Listing], center: CLLocationCoordinate2D = .losAngeles) {
@@ -28,10 +29,19 @@ struct ListingMapView: View {
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            Map(position: $cameraPosition, selection: $selectedListing) {
-                ForEach(listings) { listing in
-                    Marker("", coordinate: listing.coordinates)
-                        .tag(listing.id)
+            ZStack(alignment: .bottom) {
+                Map(position: $cameraPosition, selection: $selectedListing) {
+                    ForEach(listings, id: \.self) { listing in
+                        Marker("", coordinate: listing.coordinates)
+                            .tag(listing.id)
+                    }
+                }
+            }
+            
+            if let selectedListing {
+                withAnimation(.spring) {
+                    ListingMapPreviewView(listing: selectedListing)
+                        .onTapGesture { showDetails.toggle() }
                 }
             }
             
@@ -49,6 +59,12 @@ struct ListingMapView: View {
                     .padding(.top, 40)
                     .padding(.leading, 32)
             }
+        }
+        .fullScreenCover(isPresented: $showDetails) {
+            if let selectedListing {
+                ListingDetailView(listing: selectedListing)
+            }
+            
         }
     }
 }
