@@ -39,6 +39,8 @@ struct RegistrationView: View {
                     .modifier(PrimaryButtonModifier())
             }
             .padding(.vertical)
+            .disabled(!formIsValid)
+            .opacity(formIsValid ? 1.0 : 0.7)
             
             Spacer()
             
@@ -57,6 +59,17 @@ struct RegistrationView: View {
             }
             .padding(.vertical)
         }
+    }
+}
+// MARK: - AuthenticationFormProtocol
+
+extension RegistrationView: AuthenticationFormProtocol {
+    var formIsValid: Bool {
+        return !email.isEmpty &&
+        email.contains("@") &&
+        password.count > 5 &&
+        !password.isEmpty &&
+        !fullname.isEmpty
     }
 }
 

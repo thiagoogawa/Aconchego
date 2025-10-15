@@ -48,6 +48,8 @@ struct LoginView: View {
                         .modifier(PrimaryButtonModifier())
                 }
                 .padding(.vertical)
+                .disabled(!formIsValid)
+                .opacity(formIsValid ? 1.0 : 0.7)
                 
                 Spacer()
                 
@@ -68,6 +70,16 @@ struct LoginView: View {
                 .padding(.vertical)
             }
         }
+    }
+}
+
+// MARK: - AuthenticationFormProtocol
+
+extension LoginView: AuthenticationFormProtocol {
+    var formIsValid: Bool {
+        return !email.isEmpty &&
+        email.contains("@") &&
+        !password.isEmpty
     }
 }
 

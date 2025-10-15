@@ -28,7 +28,7 @@ struct ListingDetailView: View {
             ZStack(alignment: .topLeading) {
                 ListingImageCarouselView(listing: listing)
                     .frame(height: 320)
-                
+                        Text(listing.rating.formatted(.number.precision(.fractionLength(2))))
                 Button {
                     dismiss()
                 } label: {

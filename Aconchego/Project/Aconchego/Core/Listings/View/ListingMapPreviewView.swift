@@ -39,7 +39,7 @@ struct ListingMapPreviewView: View {
                 }
                 Spacer()
                 
-                Text("\(listing.rating)")
+                Text(listing.rating.formatted(.number.precision(.fractionLength(2))))
             }
             .font(.footnote)
             .padding(8)
