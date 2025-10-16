@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct AconchegoApp: App {
+    let authManager = AuthManager(service: FirebaseAuthService())
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(authManager: authManager)
         }
     }
 }
